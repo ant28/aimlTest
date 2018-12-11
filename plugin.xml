@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin id="org.dita.docbook-aiml">
+<feature extension="dita.specialization.catalog.relative" file="catalog-dita.xml"/>
+<feature extension="dita.conductor.target.relative" file="integratorWrapper.xml"/>
+<feature extension="dita.conductor.transtype.check" value="aiml"/>
+</plugin>

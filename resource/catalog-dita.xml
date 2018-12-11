@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+This file is part of the DITA Open Toolkit project.
+
+Copyright 2004, 2005 IBM Corporation
+
+See the accompanying LICENSE file for applicable license.
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" xmlns:dita="http://dita-ot.sourceforge.net">
+
+<system systemId="plugins:org.dita.docbook-aiml:resource:aimlDomain.ent" uri="resource/aimlDomain.ent"/>
+<system systemId="plugins:org.dita.docbook-aiml:resource:aimlDomain.mod" uri="resource/aimlDomain.mod"/>
+<system systemId="plugins:org.dita.docbook-aiml:resource:aimlDomain.dtd" uri="resource/aimlDomain.dtd"/>
+<uri name="plugins:org.dita.docbook-aiml:resource:aimlTest.xsl" uri="org.dita.docbook-aiml/resource/aimlTest.xsl"/>
+<rewriteURI uriStartString="plugins:org.dita.docbook-aiml:" rewritePrefix="plugins/org.dita.docbook-aiml/"/>
+
+</catalog>

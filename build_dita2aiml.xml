@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is part of the DITA Open Toolkit project.
+     See the accompanying license.txt file for applicable licenses.-->
+<!-- (c) Copyright IBM Corp. 2006 All Rights Reserved. -->
+<project name="dita2aiml">
+
+  <target name="dita2aiml"
+    depends="build-init, preprocess, topic2aiml, map2aiml">
+  </target>
+
+  <target name="topic2aiml" if="noMap">
+    <antcall target="dita.topic.aiml">
+      <param name="inputFile"
+        value="${dita.temp.dir}${file.separator}${user.input.file}" />
+      <param name="outputFile"
+        value="${dita.map.output.dir}${file.separator}${dita.topic.filename.root}.aiml" />
+    </antcall>
+  </target>
+
+  <target name="map2aiml" unless="noMap">
+    <antcall target="dita.map.aiml">
+      <param name="mapRoot" value="${dita.map.filename.root}" />
+      <param name="inputMap" value="${user.input.file}" />
+      <param name="inputDir" value="${dita.temp.dir}" />
+      <param name="outputDir" value="${dita.map.output.dir}" />
+    </antcall>
+  </target>
+
+  <!-- Build aiml output from ditamap -->
+  <target name="dita.map.aiml"
+    description="Build aiml output from ditamap">
+    <condition property="args.xsl"
+      value="${dita.plugin.org.dita.docbook-aiml.dir}/resource/aimlTest.xsl">
+      <not>
+        <isset property="args.xsl" />
+      </not>
+    </condition>
+	<!--创建输出目录-->
+    <mkdir dir="${outputDir}" />
+    <xslt in="${inputDir}${file.separator}${inputMap}"
+      out="${outputDir}${file.separator}${mapRoot}.xml"
+      classpathref="dost.class.path"
+      style="${args.xsl}">
+      <param name="outputdir" expression="${outputDir}" />
+      <param name="defaultLanguage" expression="${default.language}"/>
+      <xmlcatalog refid="dita.catalog"/>
+    </xslt>
+  </target>
+
+  <!-- Build DocBook output from dita topic -->
+  <target name="dita.topic.aiml"
+    description="Build aiml output from dita topic">
+    <condition property="args.xsl"
+      value="${dita.plugin.org.dita.docbook-aiml.dir}/resource/aimlTest.xsl">
+      <not>
+        <isset property="args.xsl" />
+      </not>
+    </condition>
+    <xslt in="${inputFile}" out="${outputFile}"
+      classpathref="dost.class.path"
+      style="${args.xsl}">
+      <xmlcatalog refid="dita.catalog"/>
+    </xslt>
+  </target>
+</project>
