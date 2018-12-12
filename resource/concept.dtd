@@ -154,7 +154,7 @@
 <!ENTITY % foreign      "foreign |
                          %svg-d-foreign; |
                          %mathml-d-foreign;|
-						 %aiml-d-foreign;
+			 %aiml-d-foreign;
                         ">
 <!ENTITY % div          "div |
                          %equation-d-div;
@@ -200,7 +200,7 @@
                            &ui-d-att;
                            &ut-d-att;
                            &xml-d-att;
-						   &aiml-d-att;
+			   &aiml-d-att;
   "
 >
 
@@ -298,6 +298,6 @@
 
 <!ENTITY % aiml-d-def
   SYSTEM "aimlDomain.mod"
->%aiml-d-def
+>%aiml-d-def;
 
 <!-- ================= End of DITA Concept Shell ================= -->
