@@ -3,7 +3,7 @@
 <xsl:output indent="yes"/>
   
 
-<!--4 test1.xml  仅有内容，没有标签-->
+<!--4 test1.xml  only content, no <root> element-->
 <!--=========================================================-->
 <!--Template for aiml content-->
    <xsl:template match="*[contains(@class, ' aiml-d/categoryai ')]">
@@ -38,14 +38,14 @@
  <xsl:template match="*[contains(@class, ' topic/prolog ')]"/>
  <!--<xsl:template match="*[contains(@class, ' topic/shortdesc ')]"/>-->
  
-<!--<xsl:template match="*[contains(@class, ' concept/concept ')]">
+<xsl:template match="*[contains(@class, ' concept/concept ')]">
    <category>
     <pattern><xsl:value-of select="*[contains(@class, ' topic/title ')]"/></pattern>
 	<template><xsl:value-of select="*[contains(@class, ' topic/shortdesc ')]"/></template>
    </category>
 </xsl:template>-->
 
-
+<!--if the fisrt node of concept is title, then the content in tile for pattern, and the content in shortdesc for template-->
 <xsl:template match="*[contains(@class,' topic/title ')]">
   <category>
     <pattern><xsl:value-of select="."/></pattern>
