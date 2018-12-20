@@ -1,3 +1,8 @@
-<? xml version="1.0" encoding="utf-8"?>
-<!ENTITY category-d-foreign "category">
-<!ENTITY category-d-att "(topic category-d)">
+<?xml version="1.0" encoding="utf-8"?>
+<!ENTITY % aiml-d-foreign 
+  "categoryai |
+   pattern  |
+   template
+  "
+  >
+<!ENTITY aiml-d-att "(topic aiml-d)">

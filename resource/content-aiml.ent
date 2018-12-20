@@ -1,0 +1,6 @@
+<!ENTITY % content-aiml-d-attribute
+  "content-aiml
+   CDATA
+   #IMPLIED">
+<!ENTITY content-aiml-d-att
+  "a(props content-aiml)">

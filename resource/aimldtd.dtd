@@ -1,0 +1,342 @@
+<!--
+From: the mailing list of the AIML Schema Committee 2001-07-10
+See: AIML Schema Committee - http://alicebot.org/committees/aimlSchema.html
+Excerpted by:  RCC (2001-07-10)
+-->
+
+<!--
+   AIML version 1.0A Transitional DTD
+
+   This is a transitional DTD that works with the current set (09-Jul-01)
+   of documents. The ultimate goal is to be able to validate our AIML
+   and slowly change this DTD to reflect the current direction. This gives
+   us a strict way to enforce changes, until the schema is written.
+
+   This DTD was constructed by reverse engineering our existing AIML
+   documents. I also built it to show the disarray our current content
+   is in.
+
+   The process for getting on track is simple. An example:
+      - Someone suggests that the gettopic element is removed in favor of the 
+          get_topic element.
+      - The committee votes and agrees.
+      - The author removes the tag and publishes the new revision.
+      - The Alicebot AIML is then updated to reflect the change
+      - The AIML is validated and updated.
+      - The server code removes the now obsolete function. 
+
+   Eventually, we will trim this DTD way down and have a tight system.
+
+   TODO:
+      - Document the entities and elements
+
+   Free software (c) 2001 ALICE AI Foundation
+   This program is open source code released under
+   the terms of the GNU General Public License
+   as published by the Free Software Foundation.
+
+   Author: Alan Moss <ammoss@learningsoft.net>
+           LearningSoft Corp.
+   $Revision$
+   $Date$
+-->
+
+<!ENTITY % botGetters
+    " birthday          | birthplace        | bot_birthday 
+    | bot_birthplace    | bot_boyfriend     | bot_favoriteband 
+    | bot_favoritebook  | bot_favoritecolor | bot_favoritefood 
+    | bot_favoritemovie | bot_favoritesong  | bot_forfun
+    | bot_friends       | bot_gender        | bot_girlfriend 
+    | bot_kindmusic     | bot_location      | bot_looklike 
+    | bot_master        | bot_name          | bot_question 
+    | bot_talkabout     | bot_version       | botmaster
+    | botname           | favorite_color    | gender
+    | kind_music        | location          | look_like 
+    | name              | sign              | wear">
+
+<!ENTITY % flow
+    "condition | random">
+
+<!ENTITY % getters
+    " get_age      | get_birthday | get_does        | get_eyecolor
+    | get_favcolor | get_favmovie | get_gender      | get_haircolor
+    | get_has      | get_he       | get_ip          | get_is
+    | get_it       | get_job      | get_kare        | get_like 
+    | get_likes    | get_location | get_looklike    | get_married
+    | get_memory   | get_name     | get_personality | get_sexpref
+    | get_she      | get_sign     | get_spouse      | get_they
+    | get_topic    | get_usermood | get_want        | get_we 
+    | getname      | getsize      | gettopic        | getversion
+    | they">
+
+<!ENTITY % historyFunctions
+    "beforethat | justbeforethat | justthat | that">
+
+<!ENTITY % html
+    "a | applet | br | em | img | p | table | ul">
+
+<!ENTITY % scripting
+    " script">
+
+<!ENTITY % setters
+    " gossip          | set_age      | set_animagent | set_birthday
+    | set_does        | set_eyecolor | set_favcolor  | set_favmovie
+    | set_female      | set_gender   | set_haircolor | set_has 
+    | set_he          | set_heard    | set_is        | set_it
+    | set_job         | set_kare     | set_like      | set_location 
+    | set_looklike    | set_married  | set_memory    | set_name
+    | set_personality | set_sexpref  | set_she       | set_sign
+    | set_spouse      | set_that     | set_they      | set_topic
+    | set_usermood    | set_username | set_want      | set_we
+    | setname         | settopic">
+
+<!ENTITY % star
+    "star">
+
+<!ENTITY % stimulasResponse
+    "sr | srai">
+
+<!ENTITY % textFunctions
+    "formal | person | person2 | think">
+
+<!ENTITY % functions
+    " %botGetters; | %getters;          | %historyFunctions; | %setters; 
+    | %star;       | %stimulasResponse; | %textFunctions;">
+
+<!ENTITY % template
+    " %functions; | %flow; | %html; | %scripting;">
+
+
+
+<!--================ BEGIN Core Elements ==================================-->
+
+<!ELEMENT aiml     (category | topic)*>
+<!ATTLIST aiml
+  version CDATA #FIXED   "1.0A"
+  >
+<!ELEMENT category (pattern , that? , template)>
+<!ELEMENT pattern  (#PCDATA | bot_name | name)*>
+<!ELEMENT template (#PCDATA | %template;)*>
+<!ELEMENT topic    (category)+>
+<!ATTLIST topic
+  name CDATA #REQUIRED
+  >
+<!ELEMENT sr       EMPTY>
+<!ELEMENT srai     (#PCDATA | %functions;)*>
+
+<!--================ END Core Elements ====================================-->
+
+
+
+<!--================ BEGIN History Elements ===============================-->
+
+<!ELEMENT beforethat     EMPTY>
+<!ELEMENT justbeforethat EMPTY>
+<!ELEMENT justthat       EMPTY>
+<!ELEMENT that           (#PCDATA)>
+
+<!--================ END History Elements =================================-->
+
+
+
+<!--================ BEGIN Text Elements ==================================-->
+
+<!ELEMENT formal  (%functions;)>
+<!ELEMENT person  (#PCDATA | %functions;)*>
+<!ELEMENT person2 EMPTY>
+<!ELEMENT think   (#PCDATA | %functions;)*>
+
+<!--================ END Text Elements ====================================-->
+
+
+
+<!--================ BEGIN Specialized Elements ===========================-->
+
+<!ELEMENT gossip (#PCDATA | %functions;)*>
+<!ELEMENT star   EMPTY>
+
+<!--================ END Specialized Elements =============================-->
+
+
+
+<!--================ BEGIN Program Flow and Scripting Elements ============-->
+
+<!ELEMENT condition (#PCDATA | %template; | li)*>
+<!ATTLIST condition
+  name  CDATA #IMPLIED
+  value CDATA #IMPLIED
+  >
+
+<!ELEMENT li (#PCDATA | %template;)*>
+<!ATTLIST li
+  name  CDATA #IMPLIED
+  value CDATA #IMPLIED
+  >
+
+<!ELEMENT random (#PCDATA | li)*>
+
+<!ELEMENT script (#PCDATA)>
+
+<!--================ END Program Flow and Scripting Elements ==============-->
+
+
+
+<!--================ BEGIN Bot Specific Property Elements =================-->
+
+<!ELEMENT birthday          EMPTY>
+<!ELEMENT birthplace        EMPTY>
+<!ELEMENT bot_birthday      EMPTY>
+<!ELEMENT bot_birthplace    EMPTY>
+<!ELEMENT bot_boyfriend     EMPTY>
+<!ELEMENT bot_favoriteband  EMPTY>
+<!ELEMENT bot_favoritebook  EMPTY>
+<!ELEMENT bot_favoritecolor EMPTY>
+<!ELEMENT bot_favoritefood  EMPTY>
+<!ELEMENT bot_favoritemovie EMPTY>
+<!ELEMENT bot_favoritesong  EMPTY>
+<!ELEMENT bot_forfun        EMPTY>
+<!ELEMENT bot_friends       EMPTY>
+<!ELEMENT bot_gender        EMPTY>
+<!ELEMENT bot_girlfriend    EMPTY>
+<!ELEMENT bot_kindmusic     EMPTY>
+<!ELEMENT bot_location      EMPTY>
+<!ELEMENT bot_looklike      EMPTY>
+<!ELEMENT bot_master        EMPTY>
+<!ELEMENT bot_name          EMPTY>
+<!ELEMENT bot_question      EMPTY>
+<!ELEMENT bot_talkabout     EMPTY>
+<!ELEMENT bot_version       EMPTY>
+<!ELEMENT botmaster         EMPTY>
+<!ELEMENT botname           EMPTY>
+<!ELEMENT favorite_color    EMPTY>
+<!ELEMENT gender            EMPTY>
+<!ELEMENT kind_music        EMPTY>
+<!ELEMENT location          EMPTY>
+<!ELEMENT look_like         EMPTY>
+<!ELEMENT name              EMPTY>
+<!ELEMENT sign              EMPTY>
+<!ELEMENT wear              EMPTY>
+
+<!--================ END Bot Specific Elements ============================-->
+
+
+
+<!--================ BEGIN User Specific GET Elements =====================-->
+
+<!ELEMENT get_age         EMPTY>
+<!ELEMENT get_birthday    EMPTY>
+<!ELEMENT get_does        EMPTY>
+<!ELEMENT get_eyecolor    EMPTY>
+<!ELEMENT get_favcolor    EMPTY>
+<!ELEMENT get_favmovie    EMPTY>
+<!ELEMENT get_gender      EMPTY>
+<!ELEMENT get_haircolor   EMPTY>
+<!ELEMENT get_has         EMPTY>
+<!ELEMENT get_he          EMPTY>
+<!ELEMENT get_ip          EMPTY>
+<!ELEMENT get_is          EMPTY>
+<!ELEMENT get_it          EMPTY>
+<!ELEMENT get_job         EMPTY>
+<!ELEMENT get_kare        EMPTY>
+<!ELEMENT get_like        EMPTY>
+<!ELEMENT get_likes       EMPTY>
+<!ELEMENT get_location    EMPTY>
+<!ELEMENT get_looklike    EMPTY>
+<!ELEMENT get_married     EMPTY>
+<!ELEMENT get_memory      EMPTY>
+<!ELEMENT get_name        (#PCDATA)>
+<!ELEMENT get_personality EMPTY>
+<!ELEMENT get_sexpref     EMPTY>
+<!ELEMENT get_she         EMPTY>
+<!ELEMENT get_sign        EMPTY>
+<!ELEMENT get_spouse      EMPTY>
+<!ELEMENT get_they        EMPTY>
+<!ELEMENT get_topic       EMPTY>
+<!ELEMENT get_usermood    EMPTY>
+<!ELEMENT get_want        EMPTY>
+<!ELEMENT get_we          EMPTY>
+<!ELEMENT getname         EMPTY>
+<!ELEMENT getsize         EMPTY>
+<!ELEMENT gettopic        EMPTY>
+<!ELEMENT getversion      EMPTY>
+<!ELEMENT they EMPTY>
+
+<!--================ END User Specific GET Elements =======================-->
+
+
+
+<!--================ BEGIN User Specific SET Elements =====================-->
+
+<!ELEMENT set_age         (#PCDATA | %functions;)*>
+<!ELEMENT set_animagent   (#PCDATA | %functions;)*>
+<!ELEMENT set_birthday    (#PCDATA | %functions;)*>
+<!ELEMENT set_does        (#PCDATA | %functions;)*>
+<!ELEMENT set_eyecolor    (#PCDATA | %functions;)*>
+<!ELEMENT set_favcolor    (#PCDATA | %functions;)*>
+<!ELEMENT set_favmovie    (#PCDATA | %functions;)*>
+<!ELEMENT set_female      (#PCDATA | %functions;)*>
+<!ELEMENT set_gender      (#PCDATA | %functions;)*>
+<!ELEMENT set_haircolor   (#PCDATA | %functions;)*>
+<!ELEMENT set_has         (#PCDATA | %functions;)*>
+<!ELEMENT set_he          (#PCDATA | %functions;)*>
+<!ELEMENT set_heard       (#PCDATA | %functions;)*>
+<!ELEMENT set_is          (#PCDATA | %functions;)*>
+<!ELEMENT set_it          (#PCDATA | %functions;)*>
+<!ELEMENT set_job         (#PCDATA | %functions;)*>
+<!ELEMENT set_kare        (#PCDATA | %functions;)*>
+<!ELEMENT set_like        (#PCDATA | %functions;)*>
+<!ELEMENT set_location    (#PCDATA | %functions;)*>
+<!ELEMENT set_looklike    (#PCDATA | %functions;)*>
+<!ELEMENT set_married     (#PCDATA | %functions;)*>
+<!ELEMENT set_memory      (#PCDATA | %functions;)*>
+<!ELEMENT set_name        (#PCDATA | %functions;)*>
+<!ELEMENT set_personality (#PCDATA | %functions;)*>
+<!ELEMENT set_sexpref     (#PCDATA | %functions;)*>
+<!ELEMENT set_she         (#PCDATA | %functions;)*>
+<!ELEMENT set_sign        (#PCDATA | %functions;)*>
+<!ELEMENT set_spouse      (#PCDATA | %functions;)*>
+<!ELEMENT set_that        (#PCDATA | %functions;)*>
+<!ELEMENT set_they        (#PCDATA | %functions;)*>
+<!ELEMENT set_topic       (#PCDATA | %functions;)*>
+<!ELEMENT set_usermood    (#PCDATA | %functions;)*>
+<!ELEMENT set_username    (#PCDATA | %functions;)*>
+<!ELEMENT set_want        (#PCDATA | %functions;)*>
+<!ELEMENT set_we          (#PCDATA | %functions;)*>
+<!ELEMENT setname         (#PCDATA | %functions;)*>
+<!ELEMENT settopic        (#PCDATA | %functions;)*>
+
+<!--================ END User Specific SET Elements =======================-->
+
+
+<!--================ BEGIN HTML Elements ==================================-->
+
+<!ELEMENT a      (#PCDATA | %template;)*>
+<!ATTLIST a
+  href CDATA #IMPLIED
+  >
+<!ELEMENT applet (#PCDATA)>
+<!ATTLIST applet
+  code     CDATA #REQUIRED
+  codebase CDATA #IMPLIED
+  height   CDATA #IMPLIED
+  width    CDATA #IMPLIED
+  >
+<!ELEMENT br     EMPTY>
+<!ELEMENT em     (#PCDATA)>
+<!ELEMENT img    EMPTY>
+<!ATTLIST img
+  src CDATA #IMPLIED
+  >
+<!ELEMENT p      (#PCDATA | %template;)*>
+<!ELEMENT table  (tr)+>
+<!ATTLIST table
+  border      CDATA #IMPLIED
+  cellpadding CDATA #IMPLIED
+  cellspacing CDATA #IMPLIED
+  >
+<!ELEMENT td     (#PCDATA | %template;)*>
+<!ELEMENT tr     (td)+>
+<!ELEMENT ul     (li)*>
+
+<!--================ END HTML Elements ====================================-->
+
